@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using KopernikusWrapper;
+using AssemblyCSharp;
 
 public class ConnectGUI : MonoBehaviour {
     public enum ConnectionState
@@ -15,15 +16,19 @@ public class ConnectGUI : MonoBehaviour {
 
     Vehicle vehicle;
     bool isConnected;
+	PedalInputController pedalInputController;
 
     // Use this for initialization
     void Start () 
     {
         imageTexture = new Texture2D(255, 255);
+		pedalInputController = new PedalInputController ();
+		Debug.Log("CREATED");
     }
 
     // Update is called once per frame
     void Update () {
+		pedalInputController.Update();
         if (vehicle != null)
         {
             if (!isConnected && vehicle.Connected)
@@ -34,8 +39,8 @@ public class ConnectGUI : MonoBehaviour {
 
             if (vehicle.Connected)
             {
-                vehicle.SetThrottle(Input.GetAxis("Vertical"));
-                vehicle.SetBrake(Mathf.Clamp01(-Input.GetAxis("Vertical")));
+				vehicle.SetThrottle(pedalInputController.GetThrottleLevel());
+				vehicle.SetBrake(pedalInputController.GetBrakeLevel());
                 vehicle.SetSteeringAngle(Input.GetAxis("Horizontal"));
                 vehicle.Update();
 
