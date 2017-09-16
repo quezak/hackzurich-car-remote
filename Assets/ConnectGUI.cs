@@ -35,29 +35,31 @@ public class ConnectGUI : MonoBehaviour {
             if (!isConnected && vehicle.Connected)
             {
                 Debug.Log("VehicleAvailable");
+				Vehicle.INSTANCE = vehicle;
+				if (SpriteToggle.INSTANCE != null) {
+					SpriteToggle.INSTANCE.Appear();
+				}
                 isConnected = true;
             }
 
-            if (vehicle.Connected)
-			{
+			if (vehicle.Connected) {
 				pedalInputController.Update();
 				steeringInputController.Update();
 				vehicle.SetThrottle(pedalInputController.GetThrottleLevel());
 				vehicle.SetBrake(pedalInputController.GetBrakeLevel());
 				vehicle.SetSteeringAngle(steeringInputController.getSteeringAngle());
-                vehicle.Update();
+				vehicle.Update();
+				
 
-                CameraSensor s = (CameraSensor) vehicle.Sensor(SensorType.SENSOR_TYPE_CAMERA_FRONT);
-                if (s != null)
-                {
-                    CameraSensorData d = (CameraSensorData) s.Data;
-                    if (d != null)
-                    {
-                        imageTexture.LoadImage(d.ImageData);
-                        cameraDisplay.material.mainTexture = imageTexture;
-                    }
-                }
-            }
+				CameraSensor s = (CameraSensor)vehicle.Sensor(SensorType.SENSOR_TYPE_CAMERA_FRONT);
+				if (s != null) {
+					CameraSensorData d = (CameraSensorData)s.Data;
+					if (d != null) {
+						imageTexture.LoadImage(d.ImageData);
+						cameraDisplay.material.mainTexture = imageTexture;
+					}
+				}
+			}
         }
     }
 
@@ -85,10 +87,6 @@ public class ConnectGUI : MonoBehaviour {
             drawServerIpTextField();
             if (GUI.Button(scaledCenteredRect(0.8f, 0.2f), "Connect", scaledSizeStyle(GUI.skin.button))) {
                 vehicle = Kopernikus.Instance.Vehicle(serverIp);
-				Vehicle.INSTANCE = vehicle;
-				if (SpriteToggle.INSTANCE != null) {
-					SpriteToggle.INSTANCE.Appear();
-				}
             }
         }
     }
