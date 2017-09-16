@@ -292,6 +292,8 @@ namespace KopernikusWrapper
 
             //UnityEngine.Debug.Log(s);
 
+            vehicleStatus = new VehicleStatus(s);
+
             request = RequestCommand.VehicleStatus;
         }
 
