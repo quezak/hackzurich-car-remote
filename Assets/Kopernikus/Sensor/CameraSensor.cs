@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
+using AssemblyCSharp;
 
 namespace KopernikusWrapper
 {
@@ -175,7 +176,7 @@ namespace KopernikusWrapper
             */
             //UnityEngine.Debug.Log(s);
 
-            UnityEngine.Debug.Log("Received: "+numBytesRecv);
+			Utils.LogEveryN(30, "Received: "+numBytesRecv);
 
             data = new CameraSensorData(640, 360, CameraSensorData.CameraDataFormat.jpeg, readBuffer);
             requestImage = true;
