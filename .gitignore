@@ -1,5 +1,6 @@
 Library
 obj
+Build
 Packages
 Temp
 Assembly-CSharp.csproj
@@ -7,3 +8,5 @@ SimpleRemoteApp.sln
 .DS_Store
 ProjectSettings/ProjectVersion.txt
 asdf.apk
+Assets/Editor
+Assets/Editor.meta

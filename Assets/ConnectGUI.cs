@@ -18,10 +18,10 @@ public class ConnectGUI : MonoBehaviour {
     bool isConnected;
 	PedalInputController pedalInputController;
 	SteeringInputController steeringInputController;
+    public string serverIp = "172.30.5.184";
 
     // Use this for initialization
-    void Start () 
-    {
+    void Start () {
         imageTexture = new Texture2D(255, 255);
 		pedalInputController = new PedalInputController ();
 		steeringInputController = new SteeringInputController();
@@ -60,14 +60,31 @@ public class ConnectGUI : MonoBehaviour {
             }
         }
     }
-        
-    void OnGUI()
-    {
-        if (!isConnected)
-        {
-            if (GUI.Button(new Rect(Screen.width * 0.5f - 200, Screen.height * 0.5f - 40, 400, 80), "Connect"))
-            {
-                vehicle = Kopernikus.Instance.Vehicle("172.30.5.184");
+
+    Rect scaledCenteredRect(float ratioWidth, float ratioHeight, float ratioDx = 0f, float ratioDy = 0f) {
+      float width = Screen.width * ratioWidth;
+      float height = Screen.height * ratioHeight;
+      float dx = Screen.width * ratioDx;
+      float dy = Screen.height * ratioDy;
+      return new Rect((Screen.width - width) * 0.5f + dx, (Screen.height - height) * 0.5f + dy, width, height);
+    }
+
+    GUIStyle scaledSizeStyle(GUIStyle style) {
+      GUIStyle result = new GUIStyle(style);
+      result.fontSize = (int) (0.05f * Screen.height);
+      return result;
+    }
+
+    void drawServerIpTextField() {
+      serverIp = GUI.TextField(scaledCenteredRect(0.8f, 0.1f, 0f, -0.3f), serverIp, 25, scaledSizeStyle(GUI.skin.textField));
+
+    }
+
+    void OnGUI() {
+        if (!isConnected) {
+            drawServerIpTextField();
+            if (GUI.Button(scaledCenteredRect(0.8f, 0.2f), "Connect", scaledSizeStyle(GUI.skin.button))) {
+                vehicle = Kopernikus.Instance.Vehicle(serverIp);
             }
         }
     }
