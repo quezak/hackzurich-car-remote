@@ -17,18 +17,19 @@ public class ConnectGUI : MonoBehaviour {
     Vehicle vehicle;
     bool isConnected;
 	PedalInputController pedalInputController;
+	SteeringInputController steeringInputController;
     public string serverIp = "172.30.5.184";
 
     // Use this for initialization
     void Start () {
         imageTexture = new Texture2D(255, 255);
 		pedalInputController = new PedalInputController ();
+		steeringInputController = new SteeringInputController();
 		Debug.Log("CREATED");
     }
 
     // Update is called once per frame
     void Update () {
-		pedalInputController.Update();
         if (vehicle != null)
         {
             if (!isConnected && vehicle.Connected)
@@ -38,10 +39,12 @@ public class ConnectGUI : MonoBehaviour {
             }
 
             if (vehicle.Connected)
-            {
+			{
+				pedalInputController.Update();
+				steeringInputController.Update();
 				vehicle.SetThrottle(pedalInputController.GetThrottleLevel());
 				vehicle.SetBrake(pedalInputController.GetBrakeLevel());
-                vehicle.SetSteeringAngle(Input.GetAxis("Horizontal"));
+				vehicle.SetSteeringAngle(steeringInputController.getSteeringAngle());
                 vehicle.Update();
 
                 CameraSensor s = (CameraSensor) vehicle.Sensor(SensorType.SENSOR_TYPE_CAMERA_FRONT);
