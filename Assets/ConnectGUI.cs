@@ -85,6 +85,10 @@ public class ConnectGUI : MonoBehaviour {
             drawServerIpTextField();
             if (GUI.Button(scaledCenteredRect(0.8f, 0.2f), "Connect", scaledSizeStyle(GUI.skin.button))) {
                 vehicle = Kopernikus.Instance.Vehicle(serverIp);
+				Vehicle.INSTANCE = vehicle;
+				if (SpriteToggle.INSTANCE != null) {
+					SpriteToggle.INSTANCE.Appear();
+				}
             }
         }
     }

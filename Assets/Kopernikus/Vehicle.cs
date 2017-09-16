@@ -294,5 +294,7 @@ namespace KopernikusWrapper
 
             request = RequestCommand.VehicleStatus;
         }
+
+		public static Vehicle INSTANCE;
     }
 }
