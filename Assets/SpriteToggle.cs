@@ -7,6 +7,7 @@ public class SpriteToggle : MonoBehaviour {
 
 	public Sprite sprite1, sprite2;
 	private SpriteRenderer spriteRenderer;
+	private bool isForward;
 
 	// IT'S A HACKATHON, GO CRAZY
 	public static SpriteToggle INSTANCE;
@@ -19,19 +20,26 @@ public class SpriteToggle : MonoBehaviour {
 
 	public void Appear() {
 		spriteRenderer.enabled = true;
+		isForward = false;
 		setForward();
 		Debug.Log("gear selector appears!");
 	}
 
-	private void setBackward() {
+	public void setBackward() {
+		if (!isForward)
+			return;
 		spriteRenderer.sprite = sprite2;
 		Vehicle.INSTANCE.SetGear(GearDirection.GEAR_DIRECTION_BACKWARD);
+		isForward = false;
 		Debug.Log("gear set to BACKWARD");
 	}
 
-	private void setForward() {
+	public void setForward() {
+		if (isForward)
+			return;
 		spriteRenderer.sprite = sprite1;
 		Vehicle.INSTANCE.SetGear(GearDirection.GEAR_DIRECTION_FORWARD);
+		isForward = true;
 		Debug.Log("gear set to FORWARD");
 	}
 
