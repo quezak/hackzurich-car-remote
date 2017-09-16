@@ -16,7 +16,7 @@ namespace AssemblyCSharp {
 		float MAX_ANGLE_CHANGE_SEC = 60.0f;
 
 		public void Update() {
-			Quaternion gyroState = Quaternion(0.5f, 0.5f, -0.5f, 0.5f)
+			Quaternion gyroState = new Quaternion(0.5f, 0.5f, -0.5f, 0.5f)
 				* Input.gyro.attitude
 				* new Quaternion(0, 0, 1, 0);
 			Quaternion referenceRotation = Quaternion.identity;
