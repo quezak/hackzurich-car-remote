@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using KopernikusWrapper;
 using AssemblyCSharp;
@@ -12,6 +13,10 @@ public class ConnectGUI : MonoBehaviour {
     }
 
     public Renderer cameraDisplay;
+    public GameObject plane;
+    public GameObject menuBackground;
+    public InputField ipInput;
+    public Button driveBtn;
     Texture2D imageTexture;
 
     Vehicle vehicle;
@@ -23,9 +28,22 @@ public class ConnectGUI : MonoBehaviour {
     // Use this for initialization
     void Start () {
         imageTexture = new Texture2D(255, 255);
-		pedalInputController = new PedalInputController ();
+		pedalInputController = new PedalInputController();
 		steeringInputController = new SteeringInputController();
 		Debug.Log("CREATED");
+
+        driveBtn.onClick.AddListener(handleDriveBtnClick);
+        plane.SetActive(false);
+        ipInput.text = serverIp;
+    }
+
+    void handleDriveBtnClick () {
+        if (!isConnected) {
+            menuBackground.SetActive(false);
+            plane.SetActive(true);
+
+            vehicle = Kopernikus.Instance.Vehicle(ipInput.text);
+        }
     }
 
     // Update is called once per frame
@@ -36,9 +54,15 @@ public class ConnectGUI : MonoBehaviour {
             {
                 Debug.Log("VehicleAvailable");
 				Vehicle.INSTANCE = vehicle;
+
 				if (SpriteToggle.INSTANCE != null) {
 					SpriteToggle.INSTANCE.Appear();
 				}
+
+                if (PedalButton.instance != null) {
+					PedalButton.instance.Appear();
+				}
+
                 isConnected = true;
             }
 
@@ -63,7 +87,7 @@ public class ConnectGUI : MonoBehaviour {
         }
     }
 
-    Rect scaledCenteredRect(float ratioWidth, float ratioHeight, float ratioDx = 0f, float ratioDy = 0f) {
+    /*Rect scaledCenteredRect(float ratioWidth, float ratioHeight, float ratioDx = 0f, float ratioDy = 0f) {
       float width = Screen.width * ratioWidth;
       float height = Screen.height * ratioHeight;
       float dx = Screen.width * ratioDx;
@@ -79,7 +103,6 @@ public class ConnectGUI : MonoBehaviour {
 
     void drawServerIpTextField() {
       serverIp = GUI.TextField(scaledCenteredRect(0.8f, 0.1f, 0f, -0.3f), serverIp, 25, scaledSizeStyle(GUI.skin.textField));
-
     }
 
     void OnGUI() {
@@ -89,5 +112,5 @@ public class ConnectGUI : MonoBehaviour {
                 vehicle = Kopernikus.Instance.Vehicle(serverIp);
             }
         }
-    }
+    }*/
 }

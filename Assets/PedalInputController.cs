@@ -19,6 +19,8 @@ namespace AssemblyCSharp {
 		float brakeLevel = 0.0f;
 		float sliderWidth, sliderHeight, midZoneBottom, midZoneTop;
 
+		GameObject pedal;
+
 		public void Update() {
 			if (Input.touchCount == 0 || SpriteToggle.INSTANCE == null) {
 				throttleLevel = 0.0f;
@@ -27,8 +29,18 @@ namespace AssemblyCSharp {
 			}
 			for (int i = 0; i < Input.touchCount; ++i) {
 				Touch touch = Input.GetTouch(i);
+
 				if (touch.position.x > Screen.width - sliderWidth) {
 					float pos = (float)touch.position.y;
+					/*float pedalPos = PedalButton.instance.GetY();
+
+					if (pedalPos < pos && pedalPos < 3)
+						PedalButton.instance.GoUp();
+					else if (pos < pedalPos && pedalPos > -3)
+						PedalButton.instance.GoDown();*/
+					
+					PedalButton.instance.Go(touch.position.y);
+
 					if (pos < midZoneBottom) {
 						// backward, midZoneBot = zero throttle, 0 = full throttle
 						SpriteToggle.INSTANCE.setBackward();
