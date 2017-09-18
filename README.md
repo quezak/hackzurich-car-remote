@@ -3,4 +3,6 @@
 
 A HackZurich 2017 project that allows you to remotely controls a vehicle equipped with AMAG and Kopernikus middleware.
 
-Made for Android with Unity. More information on the Devpost page linked.
+Made for Android with Unity. More information [on the Devpost page](https://devpost.com/software/das-pilot/).
+
+![Das Pilot ad pic](daspilot_experience.png)
